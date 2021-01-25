@@ -42,7 +42,7 @@ class application{
                 },
                 {
                     type: "input",
-                    message: "title",
+                    message: "title please",
                     name: "title",
                 },
             ]);
@@ -62,96 +62,166 @@ class application{
             
             default:
                 break;
-        }    
+        } 
+        return employeeInfo;   
+    }
         
-        createEmployee(employeeInfo){
-            let employee;
-            const {id, name, email} = employeeInfo;
-            switch(employeeInfo.title.toLowerCase()){
-                case 'manager':
-                    const manager = new Manager(name, id, email, employeeInfo.office);
-                    employee = manager;
-                    break;
+    async getOffice(employeeInfo){
+        const managerInfo = 
+            await inquirer
+            .prompt([
+                {
+                    type:"input",
+                    message:"Office?",
+                    name:"office", 
+                }
+            ])
+        employeeInfo.office = await managerInfo.office;
+        return employeeInfo;
+    }
 
-                case 'engineer':
-                    const engineer = new Engineer(name, id, email, employeeInfo.github);
-                    employee = engineer;
-                    break;
+    async getGithub(employeeInfo){
+        const engineerInfo = 
+            await inquirer
+            .prompt([
+                {
+                    type:"input",
+                    message:"Github account name?",
+                    name:"github", 
+                }
+            ])
+        employeeInfo.github= await engineerInfo.github;
+        return employeeInfo;
+    }
+
+    async getSchool(employeeInfo){
+        const internInfo = 
+            await inquirer
+            .prompt([
+                {
+                    type:"input",
+                    message:"What school do you go too?",
+                    name:"school", 
+                }
+            ])
+        employeeInfo.school= await internInfo.school;
+        return employeeInfo;
+    }
+
+    createEmployee(employeeInfo){
+        let employee;
+        const {id, name, email} = employeeInfo;
+        switch(employeeInfo.title.toLowerCase()){
+            case 'manager':
+                const manager = new Manager(name, id, email, employeeInfo.office);
+                employee = manager;
+                break;
+
+            case 'engineer':
+                const engineer = new Engineer(name, id, email, employeeInfo.github);
+                employee = engineer;
+                break;
                 
-                case 'intern':
-                    const intern = new Intern(name, id, email, employeeInfo.school);
-                    employee = intern;
-                    break;
+            case 'intern':
+                const intern = new Intern(name, id, email, employeeInfo.school);
+                employee = intern;
+                break;
 
-                default:
-                    break;
-            }
-            return employee;
+            default:
+                break;
         }
-        
-        async getOffice(employeeInfo){
-            const managerInfo = 
-                await inquirer
-                .prompt([
-                    {
-                        type:"input",
-                        message:"Office?",
-                        name:"office", 
-                    }
-                ])
-            employeeInfo.office = await managerInfo.office;
-            return employeeInfo;
+        return employee;
+    }
+    
+    saveEmployee(employee){
+        switch(employee.getRole().toLowerCase()){
+            case 'manager':
+                this.database.manager = employee;
+                break;
+
+            case 'engineer':
+                this.database.engineers.push(employee);
+                break;
+
+            case 'intern':
+                this.database.interns.push(employee);
+                break;
+            
+            default:
+                break;
         }
-
-        async getGithub(employeeInfo){
-            const engineerInfo = 
-                await inquirer
-                .prompt([
-                    {
-                        type:"input",
-                        message:"Github account name?",
-                        name:"github", 
-                    }
-                ])
-            employeeInfo.github= await engineerInfo.github;
-            return employeeInfo;
-        }
-
-        async getSchool(employeeInfo){
-            const internInfo = 
-                await inquirer
-                .prompt([
-                    {
-                        type:"input",
-                        message:"What school do you go too?",
-                        name:"school", 
-                    }
-                ])
-            employeeInfo.school= await internInfo.school;
-            return employeeInfo;
-        }
-
-
-        saveEmployee(employee){
-            switch()
-        }
-
-
-
-
-        createTeamRoster(){
-            let mangerProfile = '';
-            let engineers = '';
-            let interns = '';
-
-
-
-
-        }
-
-
-
 
     }
 
+    createTeamRoster(){
+        let managerProfile = '';
+        let engineers = '';
+        let interns = '';
+
+        if (this.database.manager){
+            managerProfile = new ManagerProfile(this.database.manager);
+            managerProfile = managerProfile.createProfile();
+        }
+
+        if (this.database.engineers){
+            for (const engineer of this.database.engineers){
+                let engineerProfile = new EngineerProfile(engineer);
+                engineerProfile = engineerProfile.createProfile();
+
+                engineers += engineerProfile;
+            }
+        } 
+
+        if (this.database.interns){
+            for (const intern of this.database.interns){
+                let internProfile = new InternProfile(intern);
+                internProfile = internProfile.createProfile();
+
+                interns += internProfile;
+            }
+        } 
+
+        const team = managerProfile + engineers + interns;
+
+        let teamRoster = new TeamRoster(team);
+        teamRoster = teamRoster.createTeamRoster();
+
+        return teamRoster;
+    }
+
+    
+    createTeamServer(teamRoster){
+
+        fs.writeFile('.')
+
+    }
+
+
+    async init(){
+        let input = '';
+
+        do {
+        
+            const employee = this.createEmployee(await this.getEmployeeInfo)
+
+            this.saveEmployee(employee);
+
+            input = 
+                await inquirer
+                .prompt([
+                    {
+                        type: "input",
+                        message: "Please type 'yes; if you want ot exit",
+                        name: "exit"
+                    }
+                ]);
+            
+        }
+
+    }
+
+
+
+    
+    
 }
