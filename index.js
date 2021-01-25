@@ -201,11 +201,8 @@ class application{
         let input = '';
 
         do {
-        
             const employee = this.createEmployee(await this.getEmployeeInfo)
-
             this.saveEmployee(employee);
-
             input = 
                 await inquirer
                 .prompt([
@@ -216,12 +213,13 @@ class application{
                     }
                 ]);
             
-        }
+        } while (!input.exit);
 
+        const teamRoster = this.createTeamRoster();
+        this.createTeamServer(teamRoster);
     }
-
-
-
-    
-    
 }
+
+const app = new application();
+
+app.init();
