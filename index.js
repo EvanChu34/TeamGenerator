@@ -1,9 +1,9 @@
 const fs = require('fs');
 const http = require('http');
 const inquirer = require('inquirer');
-const Manager = require("./pro");
-const Engineer = require("");
-const Intern = require("");
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
 const ManagerProfile = require("./profiles/Manager.profile");
 const EngineerProfile = require("./profiles/Engineer.profile");
 const InternProfile = require("./profiles/Intern.profile");
@@ -13,7 +13,9 @@ const TeamRoster = require("./profiles/TeamRoster");
 class application{
     constructor(){
         this.database = {
-            
+            manager: null,
+            engineers:[],
+            interns:[]
         }
     }
 
@@ -44,19 +46,95 @@ class application{
                     name: "title",
                 },
             ]);
+
+        switch(employeeInfo.title.toLowerCase()){
+            case 'manager':
+                employeeInfo = await this.getOffice(employeeInfo);
+                break;
+
+            case 'engineer':
+                employeeInfo = await this.getGithub(employeeInfo);
+                break;
+
+            case 'intern':
+                employeeInfo = await this.getSchool(employeeInfo);
+                break;
+            
+            default:
+                break;
+        }    
         
         createEmployee(employeeInfo){
             let employee;
             const {id, name, email} = employeeInfo;
             switch(employeeInfo.title.toLowerCase()){
+                case 'manager':
+                    const manager = new Manager(name, id, email, employeeInfo.office);
+                    employee = manager;
+                    break;
 
-
+                case 'engineer':
+                    const engineer = new Engineer(name, id, email, employeeInfo.github);
+                    employee = engineer;
+                    break;
                 
+                case 'intern':
+                    const intern = new Intern(name, id, email, employeeInfo.school);
+                    employee = intern;
+                    break;
+
+                default:
+                    break;
             }
-
-
+            return employee;
         }
         
+        async getOffice(employeeInfo){
+            const managerInfo = 
+                await inquirer
+                .prompt([
+                    {
+                        type:"input",
+                        message:"Office?",
+                        name:"office", 
+                    }
+                ])
+            employeeInfo.office = await managerInfo.office;
+            return employeeInfo;
+        }
+
+        async getGithub(employeeInfo){
+            const engineerInfo = 
+                await inquirer
+                .prompt([
+                    {
+                        type:"input",
+                        message:"Github account name?",
+                        name:"github", 
+                    }
+                ])
+            employeeInfo.github= await engineerInfo.github;
+            return employeeInfo;
+        }
+
+        async getSchool(employeeInfo){
+            const internInfo = 
+                await inquirer
+                .prompt([
+                    {
+                        type:"input",
+                        message:"What school do you go too?",
+                        name:"school", 
+                    }
+                ])
+            employeeInfo.school= await internInfo.school;
+            return employeeInfo;
+        }
+
+
+        saveEmployee(employee){
+            switch()
+        }
 
 
 
