@@ -20,16 +20,20 @@ test("Can set email via constructor argument", ()=> {
 });
 
 test("Can get name from function", ()=> {
-    const testValue = ;
+    const testValue = "Yeet";
+    const e = new Employee(testValue);
+    expect(e.getName()).toBe(testValue);
     
 });
 
 test("Can get id from function", ()=> {
-    const testValue = ;
-
+    const testValue = 100 ;
+    const e = new Employee("Yeet", testValue);
+    expect(e.getEmail()).toBe(testValue);
 });
 
 test("Can get email from function", ()=> {
-    const testValue = ;
-
+    const testValue = "test@gmail.com";
+    const e = new Employee("Yeet", 1, testValue);
+    expect(e.getRole()).toBe(testValue);
 });
