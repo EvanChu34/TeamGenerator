@@ -1,12 +1,11 @@
 const fs = require('fs');
-const http = require('http');
 const inquirer = require('inquirer');
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
-const ManagerProfile = require("./profiles/Manager.profile");
-const EngineerProfile = require("./profiles/Engineer.profile");
-const InternProfile = require("./profiles/Intern.profile");
+const ManagerProfile = require("./profiles/ManagerProfile");
+const EngineerProfile = require("./profiles/EngineerProfile");
+const InternProfile = require("./profiles/InternProfile");
 const TeamRoster = require("./profiles/TeamRoster");
 
 
@@ -20,53 +19,50 @@ class application{
     }
 
     async getEmployeeInfo(){
-        console.log();
+        console.log(`\nEnter the employee information:\n`);
 
         let employeeInfo = 
             await inquirer
             .prompt([
                 {
                     type: "input",
-                    message: "ID please",
+                    message: "ID please: ",
                     name: "id",
                 },
                 {
                     type: "input",
-                    message: "Name please",
+                    message: "Name please: ",
                     name: "name",
                 },
                 {
                     type: "input",
-                    message: "Email please",
+                    message: "Email please: ",
                     name: "email",
                 },
                 {
                     type: "input",
-                    message: "title please",
+                    message: "title please: ",
                     name: "title",
                 },
             ]);
 
-        switch(employeeInfo.title.toLowerCase()){
+        switch(employeeInfo.title.toLowerCase()) {
             case 'manager':
                 employeeInfo = await this.getOffice(employeeInfo);
                 break;
-
             case 'engineer':
                 employeeInfo = await this.getGithub(employeeInfo);
                 break;
-
             case 'intern':
                 employeeInfo = await this.getSchool(employeeInfo);
                 break;
-            
             default:
                 break;
         } 
         return employeeInfo;   
     }
         
-    async getOffice(employeeInfo){
+    async getOffice(employeeInfo) {
         const managerInfo = 
             await inquirer
             .prompt([
@@ -75,7 +71,7 @@ class application{
                     message:"Office?",
                     name:"office", 
                 }
-            ])
+            ]);
         employeeInfo.office = await managerInfo.office;
         return employeeInfo;
     }
@@ -89,7 +85,7 @@ class application{
                     message:"Github account name?",
                     name:"github", 
                 }
-            ])
+            ]);
         employeeInfo.github= await engineerInfo.github;
         return employeeInfo;
     }
@@ -103,7 +99,7 @@ class application{
                     message:"What school do you go too?",
                     name:"school", 
                 }
-            ])
+            ]);
         employeeInfo.school= await internInfo.school;
         return employeeInfo;
     }
@@ -116,17 +112,14 @@ class application{
                 const manager = new Manager(name, id, email, employeeInfo.office);
                 employee = manager;
                 break;
-
             case 'engineer':
                 const engineer = new Engineer(name, id, email, employeeInfo.github);
                 employee = engineer;
-                break;
-                
+                break;    
             case 'intern':
                 const intern = new Intern(name, id, email, employeeInfo.school);
                 employee = intern;
                 break;
-
             default:
                 break;
         }
@@ -134,23 +127,19 @@ class application{
     }
     
     saveEmployee(employee){
-        switch(employee.getRole().toLowerCase()){
+        switch(employee.getRole().toLowerCase()) {
             case 'manager':
                 this.database.manager = employee;
                 break;
-
             case 'engineer':
                 this.database.engineers.push(employee);
                 break;
-
             case 'intern':
                 this.database.interns.push(employee);
                 break;
-            
             default:
                 break;
         }
-
     }
 
     createTeamRoster(){
@@ -177,7 +166,7 @@ class application{
                 let internProfile = new InternProfile(intern);
                 internProfile = internProfile.createProfile();
 
-                interns += internProfile;
+                engineers += internProfile;
             }
         } 
 
@@ -192,11 +181,14 @@ class application{
     
     createTeamServer(teamRoster){
 
-        fs.writeFile('.')
-
+        fs.writeFile('./dist/team.html', teamRoster, function(err){
+            if(err) throw err;
+            console.log('Saved!');
+        });
+    
     }
 
-
+    
     async init(){
         let input = '';
 

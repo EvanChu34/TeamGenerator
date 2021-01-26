@@ -1,4 +1,4 @@
-class Profile{
+class EmployeeProfile{
     constructor(employee){
         this.id = employee.id;
         this.name = employee.name;

@@ -1,4 +1,4 @@
-const ManagerProfile = require('./Employee.profile');
+const EmployeeProfile = require('./EmployeeProfile');
 
 class ManagerProfile extends EmployeeProfile{
     constructor(manager){
