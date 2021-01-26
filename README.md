@@ -4,13 +4,12 @@
 
 
 1. [About](#about)
-1. [Context](#context)
 1. [Setup Requirements](#setup-requirements)
 1. [User Input](#user-input)
 1. [Demo](#demo)
-1. [Getting Started](#getting-started)
+1. [License](#license)
 
-
+---------------------------	
 
 ## About
 
@@ -19,10 +18,7 @@ The application allows users to tyoer in the necessary information from a team m
 add as many teammates they would like. Once the user is done, the application will give a HTML File dis
 -playing all the teammates and information.
 
-
-## Context
-
-	
+---------------------------	
 
 ## Setup Requirements 
 
@@ -30,6 +26,7 @@ The user must first set up:
 	- inquirer
 	- jest
 
+---------------------------	
 
 ## User Input
 The user will be able to put information in 3 choices: manager, engineers, and interns. Each role requires
@@ -38,10 +35,11 @@ categories have to do with name, email and what title are they. In the Manager q
 asked what office they are in. In the Engineer questions, the user will be asked what their Github account is.
 In the Intern questions, the user will be asked what school the intern attends
 
+---------------------------	
 
 ## Demo
 
-
+---------------------------	
 
 ## License
 
@@ -66,3 +64,5 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---------------------------	
