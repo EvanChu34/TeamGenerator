@@ -180,12 +180,10 @@ class application{
 
     
     createTeamServer(teamRoster){
-
         fs.writeFile('./dist/team.html', teamRoster, function(err){
             if(err) throw err;
             console.log('Saved!');
         });
-    
     }
 
     
