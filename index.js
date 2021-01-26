@@ -107,7 +107,7 @@ class application{
     createEmployee(employeeInfo){
         let employee;
         const {id, name, email} = employeeInfo;
-        switch(employeeInfo.title.toLowerCase()){
+        switch(employeeInfo.title){
             case 'manager':
                 const manager = new Manager(name, id, email, employeeInfo.office);
                 employee = manager;

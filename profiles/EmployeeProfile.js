@@ -3,7 +3,7 @@ class EmployeeProfile{
         this.id = employee.id;
         this.name = employee.name;
         this.email = employee.email;
-        this.title = employee.getJobID;
+        this.title = employee.title;
         this.html; 
     }
 
@@ -23,6 +23,20 @@ class EmployeeProfile{
             <li class="list-group-item"><span class="font-weight-bold">ID:</span> ${this.id}</li>
             <li class="list-group-item"><span class="font-weight-bold">Email:</span> ${this.email}</li>
             `
+        switch (this.title.toLowerCase()) {
+            case 'manager':
+                this.html += `<li class="list-group-item"><span class="font-weight-bold">Office Phone: </span>${this.officeNumber}</li>`;
+                break;
+            case 'engineer':
+                this.html += `<li class="list-group-item"><span class="font-weight-bold">GitHub: </span>${this.github}</li>`;
+                break;
+            case 'intern':
+                this.html += `<li class="list-group-item"><span class="font-weight-bold">School: </span>${this.school}</li > `;
+                break;
+            default:
+                break;
+        }
+
 
         this.html += 
             `
