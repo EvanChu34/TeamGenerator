@@ -7,6 +7,12 @@ test("Can set office", ()=> {
     expect(e.office).toBe(testValue);
 });
 
+test("Return title", ()=> {
+    const testValue = "Manager";
+    const e = new Manager("Yeet", 1, "test@gmail.com", testValue);
+    expect(e.getRole()).toBe(testValue);
+});
+
 test("Can grab office from function", ()=> {
     const testValue = 100;
     const e = new Manager("Yeet", 1, "test@gmail.com", testValue);
