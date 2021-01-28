@@ -21,9 +21,7 @@ add as many teammates they would like. Once the user is done, the application wi
 
 ## Setup Requirements 
 
-The user must first set up:
-	- inquirer
-	- jest
+The user must first set up: npm, inquirer, and jest.
 
 ---------------------------	
 

@@ -77,7 +77,7 @@ class application{
     }
 
     async getGithub(employeeInfo){
-        const engineerInfo = 
+        let engineerInfo = 
             await inquirer
             .prompt([
                 {
@@ -91,7 +91,7 @@ class application{
     }
 
     async getSchool(employeeInfo){
-        const internInfo = 
+        let internInfo = 
             await inquirer
             .prompt([
                 {
@@ -127,7 +127,7 @@ class application{
     }
     
     saveEmployee(employee){
-        switch(employee.getRole().toLowerCase()) {
+        switch(employee.getRole()) {
             case 'manager':
                 this.database.manager = employee;
                 break;
@@ -198,7 +198,7 @@ class application{
                 .prompt([
                     {
                         type: "input",
-                        message: "Please type 'yes; if you want ot exit",
+                        message: "Please type 'yes; if you want to exit",
                         name: "exit"
                     }
                 ]);
