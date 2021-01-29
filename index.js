@@ -127,7 +127,7 @@ class application{
     }
     
     saveEmployee(employee){
-        switch(employee.getRole()) {
+        switch(employee) {
             case 'manager':
                 this.database.manager = employee;
                 break;
